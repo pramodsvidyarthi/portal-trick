@@ -1,0 +1,12 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.active {
+  background-color: #269;
+  color: white;
+}
+.m-b-1 {
+  margin-bottom: 1rem;
+}
