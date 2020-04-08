@@ -1,23 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 
-function isEqual(prev, next) {
-  if (next.mountNode && prev.mountNode === undefined) {
-    return false;
-  }
-  return true;
-}
-
 const Portal = React.memo(({ children, mountNode }) => {
-  const el = document.createElement("div");
-  useEffect(() => {
-    if (mountNode) {
-      mountNode.appendChild(el);
-      return () => mountNode.removeChild(el);
-    }
-  }, [el, mountNode]);
+  const el = useRef(document.createElement("div"));
 
-  return createPortal(children, el);
-}, isEqual);
+  useEffect(() => {
+    const node = el.current;
+    mountNode.appendChild(node);
+    return () => mountNode.removeChild(node);
+  }, [mountNode]);
+
+  return createPortal(children, el.current);
+});
 
 export default Portal;
